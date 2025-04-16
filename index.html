@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>BehruzBlog</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'JetBrains Mono', monospace;
+      background-color: #0a0f1c;
+      color: #cceeff;
+    }
+
+    header {
+      background-color: #0d1224;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #66ccff;
+      text-shadow: 0 0 10px #66ccff;
+    }
+
+    nav {
+      background-color: #0b1320;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+    }
+
+    nav a {
+      color: #cceeff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #66ccff;
+      text-shadow: 0 0 5px #66ccff;
+    }
+
+    .container {
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #11182c;
+      padding: 20px;
+      border: 2px solid #66ccff;
+      display: none;
+      z-index: 999;
+      box-shadow: 0 0 20px rgba(102, 204, 255, 0.5);
+      border-radius: 12px;
+    }
+
+    .popup h2 {
+      margin-top: 0;
+      color: #66ccff;
+    }
+
+    .popup button {
+      margin-top: 15px;
+      background: #66ccff;
+      color: black;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .popup button:hover {
+      background-color: #88ddff;
+    }
+
+    .blog-section {
+      display: none;
+    }
+
+    .blog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #66ccff;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .blog-header h2 {
+      margin: 0;
+      color: #66ccff;
+    }
+
+    .add-btn {
+      background: #66ccff;
+      color: #000;
+      font-size: 1.5em;
+      padding: 5px 12px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .add-btn:hover {
+      background-color: #88ddff;
+    }
+
+    .upload-form {
+      margin-top: 20px;
+    }
+
+    .upload-form input[type="file"] {
+      color: white;
+    }
+
+    .video-list video {
+      display: block;
+      margin-top: 15px;
+      max-width: 100%;
+      border: 2px solid #66ccff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(102, 204, 255, 0.3);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #0d1224;
+      border-top: 2px solid #66ccff;
+    }
+
+    .social-icons a {
+      color: #66ccff;
+      margin: 0 10px;
+      font-size: 1.5em;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 8px #66ccff;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>BehruzBlog</h1>
+</header>
+
+<nav>
+  <a onclick="showAbout()">👦 Обо мне</a>
+  <a onclick="showBlog()">📚 Блог</a>
+</nav>
+
+<div class="container">
+
+  <div id="popupAbout" class="popup">
+    <h2>👦 Обо мне</h2>
+    <p>Привет! Я — <strong>Бехруз</strong>.</p>
+    <p>Я родился <strong>28 октября 2014 года</strong>, и мой знак зодиака — <strong>Скорпион ♏</strong>.</p>
+    <p>Мне нравится всё, что связано с технологиями: <strong>Roblox Studio</strong>, программирование и создание игр.</p>
+    <button onclick="closeAbout()">Закрыть</button>
+  </div>
+
+  <div id="blogSection" class="blog-section">
+    <div class="blog-header">
+      <h2>🎬 Мой Блог</h2>
+      <button class="add-btn" onclick="toggleUploadForm()">+</button>
+    </div>
+
+    <div id="uploadForm" class="upload-form hidden">
+      <p><strong>Загрузить видео:</strong></p>
+      <input type="file" id="videoInput" accept="video/mp4,video/webm" />
+      <button onclick="uploadVideo()">📤 Выкладывать видео</button>
+    </div>
+
+    <div id="videoList" class="video-list"></div>
+  </div>
+</div>
+
+
+<footer>
+  <p>Связь со мной:</p>
+  <div class="social-icons">
+    <a href="https://youtube.com" target="_blank">📺 YouTube</a>
+    <a href="https://t.me" target="_blank">✈️ Telegram</a>
+    <a href="https://discord.com" target="_blank">💬 Discord</a>
+    <a href="https://instagram.com" target="_blank">📸 Instagram</a>
+    <a href="https://facebook.com" target="_blank">📘 Facebook</a>
+  </div>
+</footer>
+
+<script>
+  function showAbout() {
+    document.getElementById("popupAbout").style.display = "block";
+    document.getElementById("blogSection").style.display = "none";
+  }
+
+  function closeAbout() {
+    document.getElementById("popupAbout").style.display = "none";
+  }
+
+  function showBlog() {
+    document.getElementById("blogSection").style.display = "block";
+    document.getElementById("popupAbout").style.display = "none";
+    loadVideos();
+  }
+
+  function toggleUploadForm() {
+    const form = document.getElementById("uploadForm");
+    form.classList.toggle("hidden");
+  }
+
+  function uploadVideo() {
+    const input = document.getElementById("videoInput");
+    const file = input.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        let videos = JSON.parse(localStorage.getItem("myVideos")) || [];
+        videos.push(e.target.result);
+        localStorage.setItem("myVideos", JSON.stringify(videos));
+        displayVideos(videos);
+        input.value = "";
+        toggleUploadForm();
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Пожалуйста, выбери видео.");
+    }
+  }
+
+  function loadVideos() {
+    let videos = JSON.parse(localStorage.getItem("myVideos")) || [];
+    displayVideos(videos);
+  }
+
+  function displayVideos(videos) {
+    const videoList = document.getElementById("videoList");
+    videoList.innerHTML = "";
+    videos.forEach((dataUrl) => {
+      const video = document.createElement("video");
+      video.src = dataUrl;
+      video.controls = true;
+      videoList.appendChild(video);
+    });
+  }
+
+
+  window.onload = loadVideos;
+</script>
+
+</body>
+</html>
